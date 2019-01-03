@@ -1,0 +1,16 @@
+{
+  "name": "onfidoplugin",
+  "version": "1.0.0",
+  "description": "Plugin cordova Onfico",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Onfico",
+    "validation",
+    "Ionic"
+  ],
+  "author": "Sevensoft",
+  "license": "ISC"
+}
