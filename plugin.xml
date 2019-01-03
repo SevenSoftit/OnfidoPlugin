@@ -5,21 +5,31 @@
     <js-module name="OnfidoPlugin" src="www/OnfidoPlugin.js">
         <clobbers target="cordova.plugins.OnfidoPlugin"/>
     </js-module>
+
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="OnfidoPlugin">
-                <param name="android-package" value="cordova-plugin-onfido.OnfidoPlugin"/>
+                <param name="android-package" value="com.onfido.OnfidoPlugin"/>
+                <param name="onload" value="true" />
             </feature>
         </config-file>
+
         <config-file parent="/*" target="AndroidManifest.xml"/>
-        <source-file src="src/android/OnfidoPlugin.java" target-dir="src/cordova-plugin-onfido/OnfidoPlugin"/>
+        <source-file src="src/android/com/onfido/OnfidoPlugin.java" target-dir="src/com/onfido"/>
     </platform>
+
     <platform name="ios">
-        <config-file parent="/*" target="config.xml">
+        <js-module src="www/plugin.js" name="plugin">
+            <runs/>
+            <clobbers target="OnfidoPlugin" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
             <feature name="OnfidoPlugin">
-                <param name="ios-package" value="OnfidoPlugin"/>
+                <param name="ios-package" value="OnfidoPlugin" onload="true" />
             </feature>
         </config-file>
-        <source-file src="src/ios/OnfidoPlugin.m"/>
+
+        <header-file src="src/ios/OnfidoPlugin.h" />
+        <source-file src="src/ios/OnfidoPlugin.m" />
     </platform>
 </plugin>

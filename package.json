@@ -1,6 +1,6 @@
 {
   "name": "onfidoplugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plugin cordova Onfico",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,13 @@
     "Ionic"
   ],
   "author": "Sevensoft",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SevenSoftit/OnfidoPlugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SevenSoftit/OnfidoPlugin/issues"
+  },
+  "homepage": "https://github.com/SevenSoftit/OnfidoPlugin#readme"
 }
