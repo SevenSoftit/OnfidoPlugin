@@ -17,6 +17,7 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/OnfidoIdCheck.java" target-dir="src/cordova/plugin/onfido/OnfidoIdCheck" />
+        <framework>com.onfido.sdk.capture:onfido-capture-sdk-core:+</framework>
     </platform>
 
     <platform name="ios">
