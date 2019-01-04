@@ -59,8 +59,9 @@ public class OnfidoPlugin extends CordovaPlugin {
                     FlowStep.FINAL
             };
 
-            OnfidoConfig onfidoConfig = getTestOnfidoConfigBuilder()
-                    .withCustomFlow(defaultStepsWithWelcomeScreen)
+            OnfidoConfig onfidoConfig = OnfidoConfig.builder()
+                    .withToken("YOUR_MOBILE_TOKEN")
+                    .withApplicant("YOUR_APPLICANT_ID")
                     .build();
 
             onfidoAPI = OnfidoApiUtil.createOnfidoApiClient(context, onfidoConfig);
@@ -73,7 +74,7 @@ public class OnfidoPlugin extends CordovaPlugin {
         }
         return true;
     }
-
+/*
     private Applicant getTestApplicant() {
         return Applicant.builder()
                 .withFirstName("Ionic")
@@ -85,5 +86,5 @@ public class OnfidoPlugin extends CordovaPlugin {
     private OnfidoConfig.Builder getTestOnfidoConfigBuilder() {
         return OnfidoConfig.builder()
                 .withApplicant(getTestApplicant());
-    }
+    }*/
 }
