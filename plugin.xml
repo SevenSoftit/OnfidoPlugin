@@ -12,7 +12,7 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="OnfidoIdCheck">
-                <param name="android-package" value="cordova.plugin.calculator.OnfidoIdCheck" />
+                <param name="android-package" value="cordova.plugin.onfido.OnfidoIdCheck" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
