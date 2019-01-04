@@ -1,4 +1,4 @@
-package com.onfido;
+package cordova.plugin.onfido;
 
 
 import org.apache.cordova.CallbackContext;
