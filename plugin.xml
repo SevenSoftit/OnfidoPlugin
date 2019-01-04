@@ -1,36 +1,30 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-onfido" version="1.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin id="cordova-plugin-onfido" version="1.0.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>OnfidoPlugin</name>
 
+    <name>Calculator</name>
+
+    <js-module name="OnfidoIdCheck" src="www/OnfidoIdCheck.js">
+        <clobbers target="OnfidoIdCheck" />
+    </js-module>
 
     <platform name="android">
-        <js-module name="OnfidoPlugin" src="www/OnfidoPlugin.js">
-            <runs/>
-            <clobbers target="OnfidoPlugin"/>
-        </js-module>
         <config-file parent="/*" target="res/xml/config.xml">
-            <feature name="OnfidoPlugin">
-                <param name="android-package" value="com.onfido.OnfidoPlugin"/>
-                <param name="onload" value="true" />
+            <feature name="OnfidoIdCheck">
+                <param name="android-package" value="cordova.plugin.calculator.OnfidoIdCheck" />
             </feature>
         </config-file>
-        <source-file src="src/android/com/onfido/OnfidoPlugin.java" target-dir="src/com/onfido/"/>
-        <framework src="com.onfido.sdk.capture:onfido-capture-sdk-core:+"/>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+        <source-file src="src/android/OnfidoIdCheck.java" target-dir="src/cordova/plugin/onfido/OnfidoIdCheck" />
     </platform>
 
     <platform name="ios">
-        <js-module src="www/plugin.js" name="plugin">
-            <runs/>
-            <clobbers target="OnfidoPlugin" />
-        </js-module>
-        <config-file target="config.xml" parent="/*">
-            <feature name="OnfidoPlugin">
-                <param name="ios-package" value="OnfidoPlugin" onload="true" />
+        <config-file parent="/*" target="config.xml">
+            <feature name="OnfidoIdCheck">
+                <param name="ios-package" value="OnfidoIdCheck" />
             </feature>
         </config-file>
-
-        <header-file src="src/ios/OnfidoPlugin.h" />
-        <source-file src="src/ios/OnfidoPlugin.m" />
+        <source-file src="src/ios/OnfidoIdCheck.m" />
     </platform>
 </plugin>
