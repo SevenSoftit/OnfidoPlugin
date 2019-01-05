@@ -43,10 +43,6 @@ public class OnfidoIdCheck extends CordovaPlugin {
     private Onfido client;
     private OnfidoAPI onfidoAPI;
 
-    {
-        callbackContext.error("Invalid divide operation");
-    }
-
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("add")) {
