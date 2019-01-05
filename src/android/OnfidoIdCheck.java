@@ -62,7 +62,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
             this.substract(args, callbackContext);
             return true;
         } else if (action.equals("startSdk")) {
-            this.startSdk(args, callbackContext));
+            this.startSdk(args, callbackContext);
             return true;
         }
         return false;
