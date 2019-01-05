@@ -34,117 +34,126 @@ import java.util.Locale;
 
 import android.util.Log;
 import android.app.Activity;
+
 import java.util.Date;
 
 public class OnfidoIdCheck extends CordovaPlugin {
     private static final String TAG = "OnfidoIdCheck";
+    Exception e
     private Onfido client;
     private OnfidoAPI onfidoAPI;
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException
     {
-        if (action.equals("add"))
-        {
+        callbackContext.error("Invalid divide operation");
+    }
+
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("add")) {
             this.add(args, callbackContext);
             return true;
-        }else if (action.equals("multiply"))
-        {
-            this.multiply (args, callbackContext);
+        } else if (action.equals("multiply")) {
+            this.multiply(args, callbackContext);
             return true;
-        }else if (action.equals("divide"))
-        {
-            this.divide (args, callbackContext);
+        } else if (action.equals("divide")) {
+            this.divide(args, callbackContext);
             return true;
-        }else if (action.equals("substract"))
-        {
-            this.substract (args, callbackContext);
+        } else if (action.equals("substract")) {
+            this.substract(args, callbackContext);
+            return true;
+        } else if (action.equals("startSdk")) {
+            this.startSdk(args, callbackContext));
             return true;
         }
-
         return false;
     }
 
-
-
-    private void add(JSONArray args, CallbackContext callbackContext)
-    {
-        if (args != null)
-        {
-            try
-            {
-                int p1 =  Integer.parseInt(args.getJSONObject(0).getString("param1"));
+    private void add(JSONArray args, CallbackContext callbackContext) {
+        if (args != null) {
+            try {
+                int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
                 int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
-                callbackContext.success(""+ (p1+p2));
-            } catch (Exception e)
-            {
+                callbackContext.success("" + (p1 + p2));
+            } catch (Exception e) {
                 callbackContext.error("Invalid add operation");
             }
 
-        } else
-        {
+        } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
-    private void multiply(JSONArray args, CallbackContext callbackContext)
-    {
-        if (args != null)
-        {
-            try
-            {
-                int p1 =  Integer.parseInt(args.getJSONObject(0).getString("param1"));
+
+    private void multiply(JSONArray args, CallbackContext callbackContext) {
+        if (args != null) {
+            try {
+                int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
                 int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
-                callbackContext.success(""+ (p1*p2));
-            } catch (Exception e)
-            {
+                callbackContext.success("" + (p1 * p2));
+            } catch (Exception e) {
                 callbackContext.error("Invalid multiply operation");
             }
 
-        } else
-        {
+        } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
-    private void substract(JSONArray args, CallbackContext callbackContext)
-    {
-        if (args != null)
-        {
-            try
-            {
-                int p1 =  Integer.parseInt(args.getJSONObject(0).getString("param1"));
+
+    private void substract(JSONArray args, CallbackContext callbackContext) {
+        if (args != null) {
+            try {
+                int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
                 int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
-                callbackContext.success(""+ (p1-p2));
-            } catch (Exception e)
-            {
+                callbackContext.success("" + (p1 - p2));
+            } catch (Exception e) {
                 callbackContext.error("Invalid substract operation");
             }
 
-        } else
-        {
+        } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
-    }
-    private void divide(JSONArray args, CallbackContext callbackContext)
-    {
-        if (args != null)
-        {
-            try
-            {
-                int p1 =  Integer.parseInt(args.getJSONObject(0).getString("param1"));
+    } catch(
+
+    private void divide(JSONArray args, CallbackContext callbackContext) {
+        if (args != null) {
+            try {
+                int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
                 int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
-                callbackContext.success(""+ (p1/p2));
-            } catch (Exception e)
-            {
+                callbackContext.success("" + (p1 / p2));
+            } catch (Exception e) {
                 callbackContext.error("Invalid divide operation");
             }
 
-        } else
-        {
+        } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
+    })
+
+    private void startSdk(JSONArray args, CallbackContext callbackContext)) {
+        try {
+            Activity context = this.cordova.getActivity();
+            client = OnfidoFactory.create(context).getCliente();
+
+            final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
+                    FlowStep.WELCOME,
+                    FlowStep.CAPTURE_DOCUMENT,
+                    FlowStep.CAPTURE_FACE,
+                    FlowStep.FINAL
+            };
+
+            OnfidoConfig onfidoConfig = OnfidoConfig.builder()
+                    .withToken("YOUR_MOBILE_TOKEN")
+                    .withApplicant("YOUR_APPLICANT_ID")
+                    .build();
+
+            onfidoAPI = OnfidoApiUtil.createOnfidoApiClient(context, onfidoConfig);
+
+            client.startActivityForResult(context, 1, onfidoConfig);
+
+            // An example of returning data back to the web layer
+            final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
+            callbackContext.sendPluginResult(result);
+        }
     }
-
-
     /*
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);

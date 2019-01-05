@@ -19,3 +19,7 @@ module.exports.substract = function (arg0, success, error) {
 module.exports.divide = function (arg0, success, error) {
     exec(success, error, 'OnfidoIdCheck', 'divide', [arg0]);
 };
+
+module.exports.startSdk = function (arg0, success, error) {
+    exec(success, error, 'OnfidoIdCheck', 'startSdk', [arg0]);
+};
