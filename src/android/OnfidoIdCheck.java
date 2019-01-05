@@ -61,8 +61,9 @@ public class OnfidoIdCheck extends CordovaPlugin {
                     FlowStep.FINAL
             };
 
-            OnfidoConfig onfidoConfig = getTestOnfidoConfigBuilder()
-                    .withCustomFlow(defaultStepsWithWelcomeScreen)
+            OnfidoConfig onfidoConfig = OnfidoConfig.builder()
+                    .withToken("YOUR_MOBILE_TOKEN")
+                    .withApplicant("YOUR_APPLICANT_ID")
                     .build();
 
             onfidoAPI = OnfidoApiUtil.createOnfidoApiClient(context, onfidoConfig);
@@ -75,7 +76,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
         }
         return true;
     }
-
+/*
     private Applicant getTestApplicant() {
         return Applicant.builder()
                 .withFirstName("Ionic")
