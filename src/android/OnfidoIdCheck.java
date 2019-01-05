@@ -43,6 +43,12 @@ public class OnfidoIdCheck extends CordovaPlugin {
     private Onfido client;
     private OnfidoAPI onfidoAPI;
 
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+
+        Log.d(TAG, "Initializing MyCordovaPlugin");
+    }
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("add")) {
