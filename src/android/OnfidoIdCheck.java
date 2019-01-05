@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class OnfidoIdCheck extends CordovaPlugin {
     private static final String TAG = "OnfidoIdCheck";
-    Exception e
+
     private Onfido client;
     private OnfidoAPI onfidoAPI;
 
@@ -111,7 +111,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
-    } catch(
+    }
 
     private void divide(JSONArray args, CallbackContext callbackContext) {
         if (args != null) {
@@ -126,7 +126,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
-    })
+    }
 
     private void startSdk(JSONArray args, CallbackContext callbackContext)) {
         try {
@@ -152,6 +152,9 @@ public class OnfidoIdCheck extends CordovaPlugin {
             // An example of returning data back to the web layer
             final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
             callbackContext.sendPluginResult(result);
+        }
+        catch (Exception e) {
+            callbackContext.error("Invalid divide operation");
         }
     }
     /*
