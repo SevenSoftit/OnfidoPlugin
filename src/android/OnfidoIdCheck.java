@@ -64,7 +64,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
             this.substract(args, callbackContext);
             return true;
         } else if (action.equals("startSdk")) {
-            final Context context = this.cordova.getActivity();
+            final Activity context = this.cordova.getActivity();
             client = OnfidoFactory.create(context).getCliente();
             this.startSdk(args, callbackContext);
             return true;
