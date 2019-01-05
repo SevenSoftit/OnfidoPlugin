@@ -49,6 +49,46 @@ public class OnfidoIdCheck extends CordovaPlugin {
         Log.d(TAG, "Initializing MyCordovaPlugin");
     }
 
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if(action.equals("startSdk")) {
+            Activity context=this.cordova.getActivity();
+            client = OnfidoFactory.create(context).getClient();
+
+            final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
+                    FlowStep.WELCOME,
+                    FlowStep.CAPTURE_DOCUMENT,
+                    FlowStep.CAPTURE_FACE,
+                    FlowStep.FINAL
+            };
+
+            OnfidoConfig onfidoConfig = getTestOnfidoConfigBuilder()
+                    .withCustomFlow(defaultStepsWithWelcomeScreen)
+                    .build();
+
+            onfidoAPI = OnfidoApiUtil.createOnfidoApiClient(context, onfidoConfig);
+
+            client.startActivityForResult(context, 1, onfidoConfig);
+
+            // An example of returning data back to the web layer
+            final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
+            callbackContext.sendPluginResult(result);
+        }
+        return true;
+    }
+
+    private Applicant getTestApplicant() {
+        return Applicant.builder()
+                .withFirstName("Ionic")
+                .withLastName("User")
+                .withToken("YOUR_MOBILE_TOKEN")
+                .build();
+    }
+
+    private OnfidoConfig.Builder getTestOnfidoConfigBuilder() {
+        return OnfidoConfig.builder()
+                .withApplicant(getTestApplicant());
+    }
+/*
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("add")) {
