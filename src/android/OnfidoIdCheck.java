@@ -64,6 +64,8 @@ public class OnfidoIdCheck extends CordovaPlugin {
             this.substract(args, callbackContext);
             return true;
         } else if (action.equals("startSdk")) {
+            Activity context = this.cordova.getActivity();
+            client = OnfidoFactory.create(context).getCliente();
             this.startSdk(args, callbackContext);
             return true;
         }
@@ -132,8 +134,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
     private void startSdk(JSONArray args, CallbackContext callbackContext) {
         try {
-            Activity context = this.cordova.getActivity();
-            client = OnfidoFactory.create(context).getCliente();
+
 
             final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
                     FlowStep.WELCOME,
