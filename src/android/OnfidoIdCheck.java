@@ -16,6 +16,7 @@ import com.onfido.android.sdk.capture.OnfidoFactory;
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariant;
 import com.onfido.android.sdk.capture.ui.options.FlowStep;
+import com.onfido.android.sdk.capture.ui.options.CaptureScreenStep;
 import com.onfido.android.sdk.capture.upload.Captures;
 import com.onfido.android.sdk.capture.utils.OnfidoApiUtil;
 import com.onfido.api.client.OnfidoAPI;
@@ -24,6 +25,7 @@ import com.onfido.api.client.data.Applicant;
 import com.onfido.api.client.data.Check;
 import com.onfido.api.client.data.ErrorData;
 import com.onfido.api.client.data.Report;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -52,7 +54,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
             final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
                     FlowStep.WELCOME,
-                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GB),//FlowStep.CAPTURE_DOCUMENT,
+                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GB),
                     FlowStep.CAPTURE_FACE,
                     FlowStep.FINAL
             };
