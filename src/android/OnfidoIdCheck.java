@@ -9,18 +9,22 @@ import org.apache.cordova.PluginResult.Status;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import com.onfido.android.sdk.capture.ExitCode;
 import com.onfido.android.sdk.capture.Onfido;
 import com.onfido.android.sdk.capture.OnfidoConfig;
-import com.onfido.android.sdk.capture.OnfidoFactory;
+import com.onfido.android.sdk.capture.DocumentType;
+
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariant;
 import com.onfido.android.sdk.capture.ui.options.FlowStep;
 import com.onfido.android.sdk.capture.ui.options.CaptureScreenStep;
-import com.onfido.android.sdk.capture.ui.options.DocumentType;
-import com.onfido.android.sdk.capture.ui.options.CountryCode;
+
 import com.onfido.android.sdk.capture.upload.Captures;
+
 import com.onfido.android.sdk.capture.utils.OnfidoApiUtil;
+import com.onfido.android.sdk.capture.utils.CountryCode;
+
 import com.onfido.api.client.OnfidoAPI;
 import com.onfido.api.client.data.Address;
 import com.onfido.api.client.data.Applicant;
