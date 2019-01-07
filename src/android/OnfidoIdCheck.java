@@ -17,6 +17,8 @@ import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariant;
 import com.onfido.android.sdk.capture.ui.options.FlowStep;
 import com.onfido.android.sdk.capture.ui.options.CaptureScreenStep;
+import com.onfido.android.sdk.capture.ui.options.DocumentType;
+import com.onfido.android.sdk.capture.ui.options.CountryCode;
 import com.onfido.android.sdk.capture.upload.Captures;
 import com.onfido.android.sdk.capture.utils.OnfidoApiUtil;
 import com.onfido.api.client.OnfidoAPI;
