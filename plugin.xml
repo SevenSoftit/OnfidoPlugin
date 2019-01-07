@@ -19,6 +19,15 @@
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/OnfidoIdCheck.java" target-dir="src/cordova/plugin/onfido/OnfidoIdCheck" />
         <framework src="com.onfido.sdk.capture:onfido-capture-sdk-core:+"/>
+
+        <preference name="onfidoColorPrimary" value="#000000" />
+        <preference name="onfidoColorPrimaryDark" value="#000000" />
+        <preference name="onfidoTextColorPrimary" value="#000000" />
+        <preference name="onfidoTextColorSecondary" value="#000000" />
+        <preference name="onfidoColorAccent" value="#000000" />
+        <preference name="onfidoPrimaryButtonColor" value="#000000" />
+        <preference name="onfidoPrimaryButtonColorPressed" value="#000000" />
+        <preference name="onfidoPrimaryButtonTextColor" value="#000000" />
     </platform>
 
     <platform name="ios">
