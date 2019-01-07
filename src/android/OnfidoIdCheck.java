@@ -9,7 +9,6 @@ import org.apache.cordova.PluginResult.Status;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
-import com.onfido.android.sdk.*;
 import com.onfido.android.sdk.capture.ExitCode;
 import com.onfido.android.sdk.capture.Onfido;
 import com.onfido.android.sdk.capture.OnfidoConfig;
@@ -53,7 +52,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
             final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
                     FlowStep.WELCOME,
-                    new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),//FlowStep.CAPTURE_DOCUMENT,
+                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GB),//FlowStep.CAPTURE_DOCUMENT,
                     FlowStep.CAPTURE_FACE,
                     FlowStep.FINAL
             };
