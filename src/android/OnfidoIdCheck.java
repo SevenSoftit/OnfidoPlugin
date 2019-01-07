@@ -61,7 +61,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
             final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
                     FlowStep.WELCOME,
-                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GB),
+                    new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
                     FlowStep.CAPTURE_FACE,
                     FlowStep.FINAL
             };
