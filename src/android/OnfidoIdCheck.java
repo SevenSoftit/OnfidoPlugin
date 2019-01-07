@@ -13,6 +13,7 @@ import org.json.JSONException;
 import com.onfido.android.sdk.capture.ExitCode;
 import com.onfido.android.sdk.capture.Onfido;
 import com.onfido.android.sdk.capture.OnfidoConfig;
+import com.onfido.android.sdk.capture.OnfidoFactory;
 import com.onfido.android.sdk.capture.DocumentType;
 
 import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
