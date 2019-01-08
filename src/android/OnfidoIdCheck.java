@@ -1,7 +1,7 @@
 package cordova.plugin.onfido;
 
 import android.widget.Toast;
-
+import android.content.Intent;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
@@ -244,6 +244,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
