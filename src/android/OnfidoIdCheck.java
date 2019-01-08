@@ -1,4 +1,5 @@
 package cordova.plugin.onfido;
+
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+
 import android.util.Log;
 import android.app.Activity;
 
@@ -60,7 +62,8 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
     private Onfido client;
     private OnfidoAPI onfidoAPI;
-    Activity context;
+    private Activity context;
+    private String applicantId;
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -69,8 +72,10 @@ public class OnfidoIdCheck extends CordovaPlugin {
     }
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        if(action.equals("startSdk")) {
+        if (action.equals("startSdk")) {
 
+            setWelcomeScreen();
+            /*
             context = this.cordova.getActivity();
             client = OnfidoFactory.create(context).getClient();
 
@@ -114,25 +119,75 @@ public class OnfidoIdCheck extends CordovaPlugin {
                 public void onError(ANError anError) {
                 }
             });
+            */
         }
         return true;
     }
 
-  /*
-  private Applicant getTestApplicant() {
-    return Applicant.builder()
-      .withFirstName("Ionic")
-      .withLastName("User")
-      .withToken("test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R")
-      .build();
-  }
+    private void startCheck(Applicant applicant) {
+        //Call your back end to initiate the check
+        //completedCheck();
+        completedCheck(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    showToast("onResponse");
+                    String v = response.toString();
+                    applicantId = response.getString("id");
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-  private OnfidoConfig.Builder getTestOnfidoConfigBuilder() {
-    return OnfidoConfig.builder()
-      .withApplicant(getTestApplicant());
-  }
-  */
+            @Override
+            public void onError(ANError anError) {
+                ANError v = anError;
+                showToast("onError startCheck");
+            }
+        });
+    }
+
+    private void setWelcomeScreen() {
+        //setContentView(R.layout.activity_main);
+
+        final FlowStep[] flowStepsWithOptions = new FlowStep[]{
+                new MessageScreenStep("Welcome", "In the following steps you will be asked to perform a verification check", "Start"),
+                new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
+                FlowStep.CAPTURE_FACE,
+                new MessageScreenStep("Thank you", "We will use your captured document and face to perform a verification check", "Start Check")
+        };
+
+        startFlow(flowStepsWithOptions);
+    }
+
+    private void startFlow(final FlowStep[] flowSteps) {
+        createApplicant(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    applicantId = response.getString("id");
+
+                    OnfidoConfig.Builder onfidoConfigBuilder = OnfidoConfig.builder().withApplicant(applicantId).withToken("test_iCPCbZOQv01rBCSZ5xZt65JaqMj_et76");
+
+                    if (flowSteps != null) {
+                        onfidoConfigBuilder.withCustomFlow(flowSteps);
+                    }
+
+                    OnfidoConfig onfidoConfig = onfidoConfigBuilder.build();
+                    client.startActivityForResult(context, 1, onfidoConfig);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                showToast("onError startFlow");
+            }
+        });
+    }
 
     private void createApplicant(JSONObjectRequestListener listener) {
         try {
@@ -154,8 +209,61 @@ public class OnfidoIdCheck extends CordovaPlugin {
         }
     }
 
+    private void completedCheck(JSONObjectRequestListener listener) {
+        try {
+            /*
+            $ curl https://api.onfido.com/v2/applicants/YOUR_APPLICANT_ID/checks \
+            -H 'Authorization: Token token=YOUR_API_TOKEN' \
+            -d 'type=express' \
+            -d 'reports[][name]=document' \
+            -d 'reports[][name]=facial_similarity' \
+            -d 'reports[][variant]=standard'
+            */
+            //showToast("completeCheck");
+
+            String token = "test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R";//getString(R.string.onfido_api_token);
+            final JSONObject applicant = new JSONObject();
+            applicant.put("type", "express");
+            applicant.put("reports", "['name': 'document']");
+            //applicant.put("reports", "['name': 'facial_similarity'']");
+            applicant.put("reports", "['variant': 'standard']");
+
+            AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
+                    .addJSONObjectBody(applicant)
+                    .addHeaders("Accept", "application/json")
+                    .addHeaders("Authorization", "Token token=" + token)
+                    .build()
+                    .getAsJSONObject(listener);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showToast(String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        client.handleActivityResult(resultCode, data, new Onfido.OnfidoResultListener() {
+            @Override
+            public void userCompleted(Applicant applicant, Captures captures) {
+                startCheck(applicant);
+            }
+
+            @Override
+            public void userExited(ExitCode exitCode, Applicant applicant) {
+                showToast("User cancelled.");
+            }
+
+            @Override
+            public void onError(OnfidoException e, Applicant applicant) {
+                e.printStackTrace();
+                showToast("Unknown error");
+            }
+        });
     }
   /*
   @Override
