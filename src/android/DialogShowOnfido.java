@@ -25,6 +25,7 @@ import com.onfido.android.sdk.capture.upload.Captures;
 import com.onfido.android.sdk.capture.utils.CountryCode;
 import com.onfido.api.client.data.Applicant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

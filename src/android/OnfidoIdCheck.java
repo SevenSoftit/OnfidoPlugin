@@ -108,13 +108,4 @@ public class OnfidoIdCheck extends CordovaPlugin {
         // Handle other results if exists.
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    // A function to show a toast with some data, just demo
-    public void tolog(String toLog){
-        Context context = cordova.getActivity();
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, toLog, duration);
-        toast.show();
-    }
 }
