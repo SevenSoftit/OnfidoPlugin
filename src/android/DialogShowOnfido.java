@@ -26,6 +26,8 @@ import com.onfido.api.client.data.Applicant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.tools.Diagnostic;
+
 public class DialogShowOnfido extends BaseActivity {
 
     private Onfido client;
@@ -89,7 +91,7 @@ public class DialogShowOnfido extends BaseActivity {
     }
 
     private void setWelcomeScreen() {
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         final FlowStep[] flowStepsWithOptions = new FlowStep[]{
                 new MessageScreenStep("Welcome", "In the following steps you will be asked to perform a verification check", "Start"),
@@ -98,12 +100,7 @@ public class DialogShowOnfido extends BaseActivity {
                 new MessageScreenStep("Thank you", "We will use your captured document and face to perform a verification check", "Start Check")
         };
 
-        findViewById(R.id.next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFlow(flowStepsWithOptions);
-            }
-        });
+        startFlow(flowStepsWithOptions);
     }
 
     private void startFlow(final FlowStep[] flowSteps) {
@@ -120,7 +117,7 @@ public class DialogShowOnfido extends BaseActivity {
                     }
 
                     OnfidoConfig onfidoConfig = onfidoConfigBuilder.build();
-                    client.startActivityForResult(MainActivity.this, 1, onfidoConfig);
+                    client.startActivityForResult(DialogShowOnfido.this, 1, onfidoConfig);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
