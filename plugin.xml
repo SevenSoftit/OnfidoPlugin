@@ -23,7 +23,7 @@
                 android:label="OneDrive filepicker">
                 <intent-filter>
                     <!-- We are going to use this name to start the activity later in Java -->
-                    <action android:name="cordova.plugin.onfido.DialogShowOnfidor" />
+                    <action android:name="cordova.plugin.onfido.DialogShowOnfido" />
                     <category android:name="android.intent.category.DEFAULT" />
                 </intent-filter>
             </activity>
