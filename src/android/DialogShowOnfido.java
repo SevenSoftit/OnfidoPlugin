@@ -91,13 +91,10 @@ public class DialogShowOnfido extends BaseActivity {
     }
 
     private void setWelcomeScreen() {
-        //setContentView(R.layout.activity_main);
-
         final FlowStep[] flowStepsWithOptions = new FlowStep[]{
-                new MessageScreenStep("Welcome", "In the following steps you will be asked to perform a verification check", "Start"),
                 new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
-                FlowStep.CAPTURE_FACE,
-                new MessageScreenStep("Thank you", "We will use your captured document and face to perform a verification check", "Start Check")
+                new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                new MessageScreenStep("Grcias", "Usaremos su documento capturado y video para realizar una verificación de identidad", "Start Check")
         };
 
         startFlow(flowStepsWithOptions);
@@ -141,6 +138,7 @@ public class DialogShowOnfido extends BaseActivity {
              */
             String token = "test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R";//getString(R.string.onfido_api_token);
             final JSONObject applicant = new JSONObject();
+
             applicant.put("first_name", "Theresa");
             applicant.put("last_name", "May");
 
@@ -167,14 +165,14 @@ public class DialogShowOnfido extends BaseActivity {
             -d 'reports[][name]=facial_similarity' \
             -d 'reports[][variant]=standard'
             */
-            //showToast("completeCheck");
-
             String token = "test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R";//getString(R.string.onfido_api_token);
             final JSONObject applicant = new JSONObject();
+            JSONArray ja = new JSONArray();
+            JSONObject jo = new JSONObject();
+            jo.put("name", "document");
+            ja.put(jo);
             applicant.put("type", "express");
-            applicant.put("reports","['name': 'document']");
-            //applicant.put("reports", "['name': 'facial_similarity'']");
-            applicant.put("reports", "['variant': 'standard']");
+            applicant.put("reports",ja);
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
                     .addJSONObjectBody(applicant)

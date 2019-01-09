@@ -70,42 +70,51 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if(action.equals("startSdk")) {
-            Activity context=this.cordova.getActivity();
-            client = OnfidoFactory.create(context).getClient();
-
-            final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
-                    FlowStep.WELCOME,
-                    FlowStep.CAPTURE_DOCUMENT,
-                    FlowStep.CAPTURE_FACE,
-                    FlowStep.FINAL
-            };
-
-            OnfidoConfig onfidoConfig = getTestOnfidoConfigBuilder()
-                    .withCustomFlow(defaultStepsWithWelcomeScreen)
-                    .build();
-
-            onfidoAPI = OnfidoApiUtil.createOnfidoApiClient(context, onfidoConfig);
-
-            client.startActivityForResult(context, 1, onfidoConfig);
-
-            // An example of returning data back to the web layer
-            final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
-            callbackContext.sendPluginResult(result);
+            // The intent expects as first parameter the given name for the activity in your plugin.xml
+            Intent intent = new Intent("cordova.plugin.onfido.DialogShowOnfido");
+            // Send some info to the activity to retrieve it later
+            //intent.putExtra("app_id", ONEDRIVE_APP_ID);
+            //intent.putExtra("link_mode", LINK_MODE);
+            // Now, cordova will expect for a result using startActivityForResult and will be handle by the onActivityResult.
+            cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
         }
+
+        // Send no result, to execute the callbacks later
+        PluginResult pluginResult = new  PluginResult(PluginResult.Status.NO_RESULT);
+        pluginResult.setKeepCallback(true); // Keep callback
+
         return true;
     }
 
-    private Applicant getTestApplicant() {
-        return Applicant.builder()
-                .withFirstName("Ionic")
-                .withLastName("User")
-                //.withToken("YOUR_MOBILE_TOKEN")
-                .build();
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        /*
+        if(resultCode == cordova.getActivity().RESULT_OK){
+            Bundle extras = data.getExtras();// Get data sent by the Intent
+            String information = extras.getString("data"); // data parameter will be send from the other activity.
+            tolog(information); // Shows a toast with the sent information in the other class
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "this value will be sent to cordova");
+            resultado.setKeepCallback(true);
+            PUBLIC_CALLBACKS.sendPluginResult(resultado);
+            return;
+        }else if(resultCode == cordova.getActivity().RESULT_CANCELED){
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "canceled action, process this in javascript");
+            resultado.setKeepCallback(true);
+            PUBLIC_CALLBACKS.sendPluginResult(resultado);
+            return;
+        }
+        */
+
+        // Handle other results if exists.
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private OnfidoConfig.Builder getTestOnfidoConfigBuilder() {
-        return OnfidoConfig.builder()
-                .withToken("test_iCPCbZOQv01rBCSZ5xZt65JaqMj_et76")
-                .withApplicant(getTestApplicant());
+    // A function to show a toast with some data, just demo
+    public void tolog(String toLog){
+        Context context = cordova.getActivity();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, toLog, duration);
+        toast.show();
     }
 }
