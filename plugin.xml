@@ -18,6 +18,7 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/OnfidoIdCheck.java" target-dir="src/cordova/plugin/onfido/OnfidoIdCheck" />
+        <source-file src="src/android/DialogShowOnfido.java" target-dir="src/cordova/plugin/onfido/DialogShowOnfido" />
         <framework src="com.onfido.sdk.capture:onfido-capture-sdk:+"/>
         <framework src="com.squareup.okhttp3:logging-interceptor:3.4.1"/>
         <framework src="com.squareup.okhttp3:okhttp:3.4.1"/>
