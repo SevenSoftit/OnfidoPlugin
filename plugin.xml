@@ -20,7 +20,7 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="cordova.plugin.onfido.DialogShowOnfido"
-                android:label="OneDrive filepicker">
+                android:label="OneDrive filepicker" android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
                 <intent-filter>
                     <!-- We are going to use this name to start the activity later in Java -->
                     <action android:name="cordova.plugin.onfido.DialogShowOnfido" />

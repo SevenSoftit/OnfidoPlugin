@@ -1,6 +1,6 @@
 package cordova.plugin.onfido;
 
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,20 +31,45 @@ import org.json.JSONObject;
 
 import javax.tools.Diagnostic;
 
-public class DialogShowOnfido extends BaseActivity {
+public class DialogShowOnfido extends Activity {
 
     private Onfido client;
     private String applicantId;
-
+    private boolean firstTime = true;
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = OnfidoFactory.create(this).getClient();
         setWelcomeScreen();
     }
+    */
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onStart() {
+        super.onStart();
+        // Write your code inside this condition
+        // Here should start the process that expects the onActivityResult
+        if(firstTime == true){
+
+            // Do something at first initialization
+            // And retrieve the parameters that we sent before in the Main file of the plugin
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String appId = extras.getString("app_id");
+
+                client = OnfidoFactory.create(this).getClient();
+                setWelcomeScreen();
+            }
+
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        firstTime = false;
+
         super.onActivityResult(requestCode, resultCode, data);
         client.handleActivityResult(resultCode, data, new Onfido.OnfidoResultListener() {
             @Override
@@ -79,6 +104,12 @@ public class DialogShowOnfido extends BaseActivity {
                     showToast("onResponse");
                     String v = response.toString();
                     applicantId = response.getString("id");
+
+                    // Send parameters to retrieve in cordova.
+                    Intent intent = new Intent();
+                    intent.putExtra("data", "This is the sent information from the 2 activity :) ");
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();// Exit of this activity !
 
                 } catch (JSONException e) {
                     e.printStackTrace();

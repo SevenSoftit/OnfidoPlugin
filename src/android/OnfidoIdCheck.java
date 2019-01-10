@@ -69,6 +69,9 @@ public class OnfidoIdCheck extends CordovaPlugin {
     }
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+
+        showToast("startSdk");
+
         if(action.equals("startSdk")) {
             // The intent expects as first parameter the given name for the activity in your plugin.xml
             Intent intent = new Intent("cordova.plugin.onfido.DialogShowOnfido");
@@ -107,5 +110,9 @@ public class OnfidoIdCheck extends CordovaPlugin {
 
         // Handle other results if exists.
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this.cordova.getActivity(), message, Toast.LENGTH_LONG).show();
     }
 }
