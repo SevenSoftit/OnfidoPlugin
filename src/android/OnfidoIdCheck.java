@@ -62,17 +62,21 @@ public class OnfidoIdCheck extends CordovaPlugin {
     private Onfido client;
     private OnfidoAPI onfidoAPI;
 
+    /*
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
         Log.d(TAG, "Initializing MyCordovaPlugin");
     }
+    */
 
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        Activity context = this.cordova.getActivity();
         showToast("startSdk");
 
         if(action.equals("startSdk")) {
+            showToast("1");
             // The intent expects as first parameter the given name for the activity in your plugin.xml
             Intent intent = new Intent("cordova.plugin.onfido.DialogShowOnfido");
             // Send some info to the activity to retrieve it later
@@ -80,6 +84,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
             //intent.putExtra("link_mode", LINK_MODE);
             // Now, cordova will expect for a result using startActivityForResult and will be handle by the onActivityResult.
             cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
+            showToast("2");
         }
 
         // Send no result, to execute the callbacks later

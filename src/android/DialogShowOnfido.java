@@ -47,22 +47,23 @@ public class DialogShowOnfido extends Activity {
 
     @Override
     public void onStart() {
+        showToast("onStart");
         super.onStart();
         // Write your code inside this condition
         // Here should start the process that expects the onActivityResult
         if(firstTime == true){
-
+            showToast("firstTime");
             // Do something at first initialization
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String appId = extras.getString("app_id");
 
-                client = OnfidoFactory.create(this).getClient();
-                setWelcomeScreen();
+
             }
 
-
+            client = OnfidoFactory.create(this).getClient();
+            setWelcomeScreen();
         }
     }
 
@@ -91,7 +92,7 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(DialogShowOnfido.this, message, Toast.LENGTH_LONG).show();
     }
 
     private void startCheck(Applicant applicant) {
