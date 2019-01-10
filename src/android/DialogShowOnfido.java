@@ -36,18 +36,13 @@ public class DialogShowOnfido extends Activity {
     private Onfido client;
     private String applicantId;
     private boolean firstTime = true;
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        client = OnfidoFactory.create(this).getClient();
-        setWelcomeScreen();
-    }
-    */
+    private String api_token;
+    private String mobile_token;
+    private Aplicant applicant_client;
+    private Aplicant applicant_check;
 
     @Override
     public void onStart() {
-        showToast("onStart");
         super.onStart();
         // Write your code inside this condition
         // Here should start the process that expects the onActivityResult
@@ -57,9 +52,10 @@ public class DialogShowOnfido extends Activity {
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                String appId = extras.getString("app_id");
-
-
+                api_token = extras.getString("Api_Token");
+                mobile_token = extras.getString("Mobile_Token");
+                applicant_client = new JSONObject(extras.getString("Applicant_Client"));
+                applicant_client = new JSONObject(extras.getString("Applicant_Check"));
             }
 
             client = OnfidoFactory.create(this).getClient();
@@ -171,14 +167,14 @@ public class DialogShowOnfido extends Activity {
               -d 'first_name=Theresa' \
               -d 'last_name=May'
              */
-            String token = "test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R";//getString(R.string.onfido_api_token);
+            String token = api_token;//getString(R.string.onfido_api_token);
             final JSONObject applicant = new JSONObject();
 
             applicant.put("first_name", "Theresa");
             applicant.put("last_name", "May");
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants")
-                    .addJSONObjectBody(applicant)
+                    .addJSONObjectBody(applicant_client)
                     .addHeaders("Accept", "application/json")
                     .addHeaders("Authorization", "Token token=" + token)
                     .build()
@@ -200,7 +196,7 @@ public class DialogShowOnfido extends Activity {
             -d 'reports[][name]=facial_similarity' \
             -d 'reports[][variant]=standard'
             */
-            String token = "test_BCoZn8ZVcYtYhTAq77Tt2h9u0I9OX75R";//getString(R.string.onfido_api_token);
+            String token = api_token;//getString(R.string.onfido_api_token);
             final JSONObject applicant = new JSONObject();
             JSONArray ja = new JSONArray();
             JSONObject jo = new JSONObject();
@@ -210,7 +206,7 @@ public class DialogShowOnfido extends Activity {
             applicant.put("reports",ja);
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
-                    .addJSONObjectBody(applicant)
+                    .addJSONObjectBody(applicant_client)
                     .addHeaders("Accept", "application/json")
                     .addHeaders("Authorization", "Token token=" + token)
                     .build()
