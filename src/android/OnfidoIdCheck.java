@@ -3,6 +3,7 @@ package cordova.plugin.onfido;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
+import android.os.Bundle;
 
 import com.onfido.android.sdk.capture.Onfido;
 import com.onfido.api.client.OnfidoAPI;

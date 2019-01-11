@@ -47,7 +47,7 @@ public class DialogShowOnfido extends Activity {
         super.onStart();
         // Write your code inside this condition
         // Here should start the process that expects the onActivityResult
-        if(firstTime == true){
+        if (firstTime == true) {
             showToast("firstTime");
             // Do something at first initialization
             // And retrieve the parameters that we sent before in the Main file of the plugin
@@ -104,16 +104,12 @@ public class DialogShowOnfido extends Activity {
         completedCheck(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    // Send parameters to retrieve in cordova.
-                    Intent intent = new Intent("cordova.plugin.onfido.OnfidoIdCheck");
-                    intent.putExtra("response", response.toString());
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();// Exit of this activity !
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                // Send parameters to retrieve in cordova.
+                Intent intent = new Intent("cordova.plugin.onfido.OnfidoIdCheck");
+                intent.putExtra("response", response.toString());
+                setResult(Activity.RESULT_OK, intent);
+                finish();// Exit of this activity !
             }
 
             @Override
@@ -206,7 +202,7 @@ public class DialogShowOnfido extends Activity {
             jo.put("name", "document");
             ja.put(jo);
             applicant.put("type", "express");
-            applicant.put("reports",ja);
+            applicant.put("reports", ja);
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
                     .addJSONObjectBody(applicant_check)
