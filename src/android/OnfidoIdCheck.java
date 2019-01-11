@@ -24,7 +24,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
         //showToast(args.getJSONObject(0));
-
+        PUBLIC_CALLBACKS = callbackContext;
         Activity context = this.cordova.getActivity();
         final JSONObject arg_object = args.getJSONObject(0);
 
