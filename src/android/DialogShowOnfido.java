@@ -122,8 +122,8 @@ public class DialogShowOnfido extends Activity {
 
             @Override
             public void onError(ANError anError) {
-                ANError v = anError;
-                showToast("onError");
+                showToast(anError.getResponse());
+                showToast(anError.fillInStackTrace());
             }
         });
     }
