@@ -50,10 +50,9 @@ public class OnfidoIdCheck extends CordovaPlugin {
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 
         if (resultCode == cordova.getActivity().RESULT_OK) {
-            //Bundle extras = data.getExtras();// Get data sent by the Intent
-            //String information = extras.getString("data"); // data parameter will be send from the other activity.
-            //tolog(information); // Shows a toast with the sent information in the other class
-            PluginResult resultado = new PluginResult(PluginResult.Status.OK, "this value will be sent to cordova");
+            Bundle extras = data.getExtras();// Get data sent by the Intent
+            String response = extras.getString("response"); // data parameter will be send from the other activity.
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, response);
             resultado.setKeepCallback(true);
             PUBLIC_CALLBACKS.sendPluginResult(resultado);
             return;

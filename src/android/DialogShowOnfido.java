@@ -105,13 +105,9 @@ public class DialogShowOnfido extends Activity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    showToast("onResponse");
-                    String v = response.toString();
-                    applicantId = response.getString("id");
-
                     // Send parameters to retrieve in cordova.
                     Intent intent = new Intent("cordova.plugin.onfido.OnfidoIdCheck");
-                    intent.putExtra("data", "This is the sent information from the 2 activity :) ");
+                    intent.putExtra("response", response.toString());
                     setResult(Activity.RESULT_OK, intent);
                     finish();// Exit of this activity !
 
@@ -132,7 +128,7 @@ public class DialogShowOnfido extends Activity {
         final FlowStep[] flowStepsWithOptions = new FlowStep[]{
                 new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
                 new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                new MessageScreenStep("Grcias", "Usaremos su documento capturado y video para realizar una verificación de identidad", "Start Check")
+                new MessageScreenStep("Gracias", "Usaremos su documento capturado y video para realizar una verificación de identidad", "Start Check")
         };
 
         startFlow(flowStepsWithOptions);
