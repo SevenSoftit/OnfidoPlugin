@@ -40,11 +40,19 @@
     </platform>
 
     <platform name="ios">
-        <config-file parent="/*" target="config.xml">
+        <config-file target="config.xml" parent="/*">
             <feature name="OnfidoIdCheck">
-                <param name="ios-package" value="OnfidoIdCheck" />
+                <param name="ios-package" value="OnfidoIdCheck"/>
             </feature>
         </config-file>
-        <source-file src="src/ios/OnfidoIdCheck.m" />
+        <source-file src="src/ios/OnfidoIdCheck.swift" />
+        <!--<header-file src="src/ios/OnfidoIdCheck.h" />-->
+        <!--<source-file src="src/ios/OnfidoIdCheck.m" />-->
+        <framework src="Foundation.framework"/>
+        <framework src="Alamofire" type="podspec" spec="~> 5.0.0.beta.1"/>
+        <framework src="Onfido" type="podspec" spec=">10.0.0"/>
+
+        <framework src="UIKit.framework"/>
+
     </platform>
 </plugin>
