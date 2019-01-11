@@ -122,7 +122,7 @@ public class DialogShowOnfido extends Activity {
 
             @Override
             public void onError(ANError anError) {
-                //showToast(anError.getResponse());
+                showToast("On Error");
                 //showToast(anError.fillInStackTrace());
             }
         });
@@ -213,7 +213,7 @@ public class DialogShowOnfido extends Activity {
             applicant.put("reports",ja);
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
-                    .addJSONObjectBody(applicant_client)
+                    .addJSONObjectBody(applicant_check)
                     .addHeaders("Accept", "application/json")
                     .addHeaders("Authorization", "Token token=" + token)
                     .build()
