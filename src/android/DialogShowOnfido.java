@@ -53,12 +53,12 @@ public class DialogShowOnfido extends Activity {
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                personObject = (new JSONObject(extras.getString("Args"))).getJSONObject("Onfido");
-                String texto = personObject.toString();
-                api_token = personObject.getString("Api_Token");
-                mobile_token = personObject.getString("Mobile_Token");
-                applicant_client = personObject.getJSONObject("Aplicant_Client");
-                applicant_check = personObject.getJSONObject("Aplicant_Check");
+                JSONObject onfido = (new JSONObject(extras.getString("Args"))).getJSONObject("Onfido");
+                String texto = onfido.toString();
+                api_token = onfido.getString("Api_Token");
+                mobile_token = onfido.getString("Mobile_Token");
+                applicant_client = onfido.getJSONObject("Aplicant_Client");
+                applicant_check = onfido.getJSONObject("Aplicant_Check");
             }
 
             client = OnfidoFactory.create(this).getClient();
