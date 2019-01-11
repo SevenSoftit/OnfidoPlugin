@@ -38,8 +38,9 @@ public class DialogShowOnfido extends Activity {
     private boolean firstTime = true;
     private String api_token;
     private String mobile_token;
-    private Aplicant applicant_client;
-    private Aplicant applicant_check;
+    private JSONObject applicant_client = null;
+    private JSONObject applicant_check;
+    //private JSONParser parser;
 
     @Override
     public void onStart() {
@@ -52,10 +53,12 @@ public class DialogShowOnfido extends Activity {
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                api_token = extras.getString("Api_Token");
-                mobile_token = extras.getString("Mobile_Token");
-                applicant_client = new JSONObject(extras.getString("Applicant_Client"));
-                applicant_client = new JSONObject(extras.getString("Applicant_Check"));
+                personObject = (new JSONObject(extras.getString("Args"))).getJSONObject("Onfido");
+                String texto = personObject.toString();
+                api_token = personObject.getString("Api_Token");
+                mobile_token = personObject.getString("Mobile_Token");
+                applicant_client = personObject.getJSONObject("Aplicant_Client");
+                applicant_check = personObject.getJSONObject("Aplicant_Check");
             }
 
             client = OnfidoFactory.create(this).getClient();
