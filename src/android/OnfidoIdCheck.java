@@ -15,6 +15,7 @@ import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 public class OnfidoIdCheck extends CordovaPlugin {
     private static final String TAG = "MyCordovaPlugin";
     private Onfido client;
@@ -33,7 +34,7 @@ public class OnfidoIdCheck extends CordovaPlugin {
             // The intent expects as first parameter the given name for the activity in your plugin.xml
             Intent intent = new Intent("cordova.plugin.onfido.DialogShowOnfido");
             // Send some info to the activity to retrieve it later
-            showToast(arg_object.toString());
+            //showToast(arg_object.toString());
             intent.putExtra("Args", arg_object.toString());
 
             // Now, cordova will expect for a result using startActivityForResult and will be handle by the onActivityResult.

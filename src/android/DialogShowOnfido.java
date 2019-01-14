@@ -48,7 +48,7 @@ public class DialogShowOnfido extends Activity {
         // Write your code inside this condition
         // Here should start the process that expects the onActivityResult
         if (firstTime == true) {
-            showToast("firstTime");
+            //showToast("firstTime");
             // Do something at first initialization
             // And retrieve the parameters that we sent before in the Main file of the plugin
             Bundle extras = getIntent().getExtras();
