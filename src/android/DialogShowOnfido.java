@@ -38,6 +38,8 @@ public class DialogShowOnfido extends Activity {
     private boolean firstTime = true;
     private String api_token;
     private String mobile_token;
+    private String msj_final;
+    private String titulo_final;
     private JSONObject applicant_client = null;
     private JSONObject applicant_check;
     //private JSONParser parser;
@@ -60,6 +62,10 @@ public class DialogShowOnfido extends Activity {
                     mobile_token = onfido.getString("Mobile_Token");
                     applicant_client = onfido.getJSONObject("Aplicant_Client");
                     applicant_check = onfido.getJSONObject("Aplicant_Check");
+
+                    msj_final = onfido.getString("Message_Final");
+                    titulo_final = onfido.getString("Titule_Final");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -124,7 +130,7 @@ public class DialogShowOnfido extends Activity {
         final FlowStep[] flowStepsWithOptions = new FlowStep[]{
                 new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
                 new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                new MessageScreenStep("Gracias", "Usaremos su documento capturado y video para realizar una verificación de identidad", "Start Check")
+                new MessageScreenStep(titulo_final, msj_final, "Start Check")
         };
 
         startFlow(flowStepsWithOptions);
@@ -137,7 +143,7 @@ public class DialogShowOnfido extends Activity {
                 try {
                     applicantId = response.getString("id");
 
-                    OnfidoConfig.Builder onfidoConfigBuilder = OnfidoConfig.builder().withApplicant(applicantId).withToken("test_iCPCbZOQv01rBCSZ5xZt65JaqMj_et76");
+                    OnfidoConfig.Builder onfidoConfigBuilder = OnfidoConfig.builder().withApplicant(applicantId).withToken(mobile_token);
 
                     if (flowSteps != null) {
                         onfidoConfigBuilder.withCustomFlow(flowSteps);
@@ -166,16 +172,11 @@ public class DialogShowOnfido extends Activity {
               -d 'first_name=Theresa' \
               -d 'last_name=May'
              */
-            String token = api_token;//getString(R.string.onfido_api_token);
-            final JSONObject applicant = new JSONObject();
-
-            applicant.put("first_name", "Theresa");
-            applicant.put("last_name", "May");
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants")
                     .addJSONObjectBody(applicant_client)
                     .addHeaders("Accept", "application/json")
-                    .addHeaders("Authorization", "Token token=" + token)
+                    .addHeaders("Authorization", "Token token=" + api_token)
                     .build()
                     .getAsJSONObject(listener);
 
@@ -195,19 +196,11 @@ public class DialogShowOnfido extends Activity {
             -d 'reports[][name]=facial_similarity' \
             -d 'reports[][variant]=standard'
             */
-            String token = api_token;//getString(R.string.onfido_api_token);
-            final JSONObject applicant = new JSONObject();
-            JSONArray ja = new JSONArray();
-            JSONObject jo = new JSONObject();
-            jo.put("name", "document");
-            ja.put(jo);
-            applicant.put("type", "express");
-            applicant.put("reports", ja);
 
             AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
                     .addJSONObjectBody(applicant_check)
                     .addHeaders("Accept", "application/json")
-                    .addHeaders("Authorization", "Token token=" + token)
+                    .addHeaders("Authorization", "Token token=" + api_token)
                     .build()
                     .getAsJSONObject(listener);
 
