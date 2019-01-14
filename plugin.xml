@@ -36,7 +36,7 @@
         <framework src="com.amitshekhar.android:android-networking:1.0.0"/>
         <framework src="com.squareup.okhttp3:logging-interceptor:3.4.1"/>
         <framework src="com.squareup.okhttp3:okhttp:3.4.1"/>
-
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
     </platform>
 
     <platform name="ios">
