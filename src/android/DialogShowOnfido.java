@@ -164,49 +164,38 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void createApplicant(JSONObjectRequestListener listener) {
-        try {
+        /*
+        $ curl https://api.onfido.com/v2/applicants \
+          -H 'Authorization: Token token=YOUR_API_TOKEN' \
+          -d 'first_name=Theresa' \
+          -d 'last_name=May'
+         */
 
-            /*
-            $ curl https://api.onfido.com/v2/applicants \
-              -H 'Authorization: Token token=YOUR_API_TOKEN' \
-              -d 'first_name=Theresa' \
-              -d 'last_name=May'
-             */
-
-            AndroidNetworking.post("https://api.onfido.com/v2/applicants")
-                    .addJSONObjectBody(applicant_client)
-                    .addHeaders("Accept", "application/json")
-                    .addHeaders("Authorization", "Token token=" + api_token)
-                    .build()
-                    .getAsJSONObject(listener);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        AndroidNetworking.post("https://api.onfido.com/v2/applicants")
+                .addJSONObjectBody(applicant_client)
+                .addHeaders("Accept", "application/json")
+                .addHeaders("Authorization", "Token token=" + api_token)
+                .build()
+                .getAsJSONObject(listener);
     }
 
 
     private void completedCheck(JSONObjectRequestListener listener) {
-        try {
-            /*
-            $ curl https://api.onfido.com/v2/applicants/YOUR_APPLICANT_ID/checks \
-            -H 'Authorization: Token token=YOUR_API_TOKEN' \
-            -d 'type=express' \
-            -d 'reports[][name]=document' \
-            -d 'reports[][name]=facial_similarity' \
-            -d 'reports[][variant]=standard'
-            */
+        /*
+        $ curl https://api.onfido.com/v2/applicants/YOUR_APPLICANT_ID/checks \
+        -H 'Authorization: Token token=YOUR_API_TOKEN' \
+        -d 'type=express' \
+        -d 'reports[][name]=document' \
+        -d 'reports[][name]=facial_similarity' \
+        -d 'reports[][variant]=standard'
+        */
 
-            AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
-                    .addJSONObjectBody(applicant_check)
-                    .addHeaders("Accept", "application/json")
-                    .addHeaders("Authorization", "Token token=" + api_token)
-                    .build()
-                    .getAsJSONObject(listener);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        AndroidNetworking.post("https://api.onfido.com/v2/applicants/" + this.applicantId + "/checks")
+                .addJSONObjectBody(applicant_check)
+                .addHeaders("Accept", "application/json")
+                .addHeaders("Authorization", "Token token=" + api_token)
+                .build()
+                .getAsJSONObject(listener);
     }
 }
 
