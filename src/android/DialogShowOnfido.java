@@ -90,6 +90,11 @@ public class DialogShowOnfido extends Activity {
             @Override
             public void userExited(ExitCode exitCode, Applicant applicant) {
                 showToast("User cancelled.");
+                // Send parameters to retrieve in cordova.
+                Intent intent = new Intent();
+                intent.putExtra("response", response.toString());
+                setResult(Activity.RESULT_OK, intent);
+                finish();// Exit of this activity !
             }
 
             @Override
