@@ -92,7 +92,7 @@ public class DialogShowOnfido extends Activity {
                 showToast("User cancelled.");
                 // Send parameters to retrieve in cordova.
                 Intent intent = new Intent();
-                intent.putExtra("response", response.toString());
+                intent.putExtra("response", "");
                 setResult(Activity.RESULT_OK, intent);
                 finish();// Exit of this activity !
             }
