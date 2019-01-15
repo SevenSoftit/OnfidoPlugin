@@ -42,6 +42,7 @@ public class DialogShowOnfido extends Activity {
     private String titulo_final;
     private JSONObject applicant_client = null;
     private JSONObject applicant_check;
+    private String automatic_check;
     //private JSONParser parser;
 
     @Override
@@ -62,10 +63,9 @@ public class DialogShowOnfido extends Activity {
                     mobile_token = onfido.getString("Mobile_Token");
                     applicant_client = onfido.getJSONObject("Aplicant_Client");
                     applicant_check = onfido.getJSONObject("Aplicant_Check");
-
+                    automatic_check = onfido.getString("Automatic_Check");
                     msj_final = onfido.getString("Message_Final");
                     titulo_final = onfido.getString("Titule_Final");
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -83,8 +83,17 @@ public class DialogShowOnfido extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         client.handleActivityResult(resultCode, data, new Onfido.OnfidoResultListener() {
             @Override
-            public void userCompleted(Applicant applicant, Captures captures) {
-                startCheck(applicant);
+            public void userCompleted(Applicant applicant, Captures captures)
+            {
+                if(automatic_check == "true")
+                    startCheck(applicant);
+                else {
+                    // Send parameters to retrieve in cordova.
+                    Intent intent = new Intent();
+                    intent.putExtra("response", applicantId);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();// Exit of this activity !
+                }
             }
 
             @Override
@@ -183,7 +192,6 @@ public class DialogShowOnfido extends Activity {
                 .build()
                 .getAsJSONObject(listener);
     }
-
 
     private void completedCheck(JSONObjectRequestListener listener) {
         /*
