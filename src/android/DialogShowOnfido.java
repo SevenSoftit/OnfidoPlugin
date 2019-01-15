@@ -117,7 +117,7 @@ public class DialogShowOnfido extends Activity {
             public void onResponse(JSONObject response) {
 
                 // Send parameters to retrieve in cordova.
-                Intent intent = new Intent("cordova.plugin.onfido.OnfidoIdCheck");
+                Intent intent = new Intent();
                 intent.putExtra("response", response.toString());
                 setResult(Activity.RESULT_OK, intent);
                 finish();// Exit of this activity !
