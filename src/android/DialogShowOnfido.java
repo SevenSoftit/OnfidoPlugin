@@ -85,7 +85,7 @@ public class DialogShowOnfido extends Activity {
             @Override
             public void userCompleted(Applicant applicant, Captures captures)
             {
-                if(automatic_check == "true")
+                if(automatic_check.equals("true"))
                     startCheck(applicant);
                 else {
                     // Send parameters to retrieve in cordova.
