@@ -161,14 +161,19 @@ class OnResult : NSObject{
                 default: break
                 }
                 completionHandler(nil)
-
             } else if case OnfidoResponse.cancel = response {
                 self._ResultFlow.Error  = false
                 self._ResultFlow.Cancel = false
                 completionHandler(nil)
             }
-
         }
+        let appearance = Appearance(
+            primaryColor: UIColor.red ,
+            primaryTitleColor: UIColor.green,
+            primaryBackgroundPressedColor: UIColor.yellow,
+            secondaryBackgroundPressedColor: UIColor.purple
+           )
+
 
         let config = try! OnfidoConfig.builder()
             .withToken(_token)
@@ -176,7 +181,7 @@ class OnResult : NSObject{
             .withDocumentStep(ofType: .nationalIdentityCard, andCountryCode: Key_ContryCode)
             .withFaceStep(ofVariant: .video)
             .withCustomLocalization(andTableName:"Localizable")
-
+            .withAppearance(appearance)
             .build()
 
         let onfidoFlow = OnfidoFlow(withConfiguration: config)
