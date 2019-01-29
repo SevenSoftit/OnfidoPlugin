@@ -102,7 +102,7 @@ class OnResult : NSObject{
                 }
             }
         } catch let error {
-
+            print("error : \(error)")
         }
         return nil
     }
@@ -269,11 +269,29 @@ class OnResult : NSObject{
                     }else
                     {
                         self._ResultFlow.Id = applicantId
-                        var oJsonResult = self.json(from: self._ResultFlow)
-                        pluginResult = CDVPluginResult(
-                            status: CDVCommandStatus_ERROR,
-                            messageAs: ""
-                        )
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: self._ResultFlow.getValues(), options: .prettyPrinted)
+                            // here "jsonData" is the dictionary encoded in JSON data
+
+                            //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+                            // here "decoded" is of type `Any`, decoded from JSON data
+
+                            // you can now cast it with the right type
+                            // if let dictFromJSON = decoded as? [String:String] {
+                            // use dictFromJSON
+                            //}
+                            let theJSONText = String(data: jsonData,
+                                                     encoding: .ascii)
+                            var oJsonResult = self.json(from: self._ResultFlow)
+                            pluginResult = CDVPluginResult(
+                                status: CDVCommandStatus_ERROR,
+                                messageAs: theJSONText
+                            )
+
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+
                     }
                     self.commandDelegate!.send(
                         pluginResult,
