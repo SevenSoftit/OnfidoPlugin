@@ -287,7 +287,7 @@ class OnResult : NSObject{
                                                      encoding: .ascii)
                             pluginResult = CDVPluginResult(
                                 status: CDVCommandStatus_OK,
-                                messageAs: theJSONText
+                                messageAs: applicantId
                             )
 
                         } catch {
@@ -304,7 +304,7 @@ class OnResult : NSObject{
                             var oJsonResult = self.json(from: self._ResultFlow)
                             pluginResult = CDVPluginResult(
                                 status: CDVCommandStatus_ERROR,
-                                messageAs: theJSONText
+                                messageAs: applicantId
                             )
 
                         } catch {
