@@ -31,7 +31,7 @@
 
         <source-file src="src/android/OnfidoIdCheck.java" target-dir="src/cordova/plugin/onfido/OnfidoIdCheck" />
         <source-file src="src/android/DialogShowOnfido.java" target-dir="src/cordova/plugin/onfido/DialogShowOnfido" />
-        <source-file src="src/android/colors.xml" target-dir="res/values" />
+        <source-file src="src/android/onfido-colors.xml" target-dir="res/values" />
         <framework src="com.onfido.sdk.capture:onfido-capture-sdk:+"/>
         <framework src="com.amitshekhar.android:android-networking:1.0.0"/>
         <framework src="com.squareup.okhttp3:logging-interceptor:3.4.1"/>
