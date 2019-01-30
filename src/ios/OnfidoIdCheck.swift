@@ -39,13 +39,39 @@ class OnResult : NSObject{
     var Key_Type = "type"
     var Key_ContryCode: String = "SLV" // Codigo de pais
     var Result: Bool = false
-    //retornos del api onfido
-
+    //Variables para colores.
+    var Key_PrimaryColor: String = ""
+    var Key_PrimaryTitleColor: String = ""
+    var Key_PrimaryBackgroundPressedColor: String = ""
+    var Key_secondaryBackgroundPressedColor: String = ""
+    var Key_fontRegular = ""
+    var Key_fontBold = ""
     func json(from object:Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
         }
         return String(data: data, encoding: String.Encoding.utf8)
+    }
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.characters.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
     //Metodo para leer el archivo json que se envia.
     func readJsonFrom(object: String)-> [String: Any]? {
@@ -168,10 +194,12 @@ class OnResult : NSObject{
             }
         }
         let appearance = Appearance(
-            primaryColor: UIColor.red ,
-            primaryTitleColor: UIColor.green,
-            primaryBackgroundPressedColor: UIColor.yellow,
-            secondaryBackgroundPressedColor: UIColor.purple
+
+            primaryColor: self.hexStringToUIColor(hex: self.Key_PrimaryColor),
+            primaryTitleColor: self.hexStringToUIColor(hex: self.Key_PrimaryTitleColor),
+            primaryBackgroundPressedColor: self.hexStringToUIColor(hex: self.Key_PrimaryBackgroundPressedColor),
+            secondaryBackgroundPressedColor: self.hexStringToUIColor(hex: self.Key_secondaryBackgroundPressedColor)
+
            )
 
 
@@ -225,6 +253,13 @@ class OnResult : NSObject{
         Key_Aplicant_Check = "Aplicant_Check"
         Key_Reports = "reports"
         Key_Type = "type"
+        Key_PrimaryColor = "#FFFFFF00"
+        Key_PrimaryTitleColor = "#FF00FFFF"
+        Key_PrimaryBackgroundPressedColor = "#FF00FFFF"
+        Key_secondaryBackgroundPressedColor = "#FF00FFFF"
+        Key_fontRegular = "OpenSans-Bold"
+        Key_fontBold = "OpenSans-Bold"
+
         _ResultFlow = OnResult()
         let jsonr = self.json(from:command.arguments[0])
 
@@ -247,15 +282,7 @@ class OnResult : NSObject{
                         self._ResultFlow.Id = applicantId
                         do {
                             let jsonData = try JSONSerialization.data(withJSONObject: self._ResultFlow.getValues(), options: .prettyPrinted)
-                            // here "jsonData" is the dictionary encoded in JSON data
 
-                            //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-                            // here "decoded" is of type `Any`, decoded from JSON data
-
-                            // you can now cast it with the right type
-                            // if let dictFromJSON = decoded as? [String:String] {
-                            // use dictFromJSON
-                            //}
                             let theJSONText = String(data: jsonData,
                                                      encoding: .ascii)
                             pluginResult = CDVPluginResult(
@@ -271,15 +298,7 @@ class OnResult : NSObject{
                         self._ResultFlow.Id = applicantId
                         do {
                             let jsonData = try JSONSerialization.data(withJSONObject: self._ResultFlow.getValues(), options: .prettyPrinted)
-                            // here "jsonData" is the dictionary encoded in JSON data
 
-                            //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-                            // here "decoded" is of type `Any`, decoded from JSON data
-
-                            // you can now cast it with the right type
-                            // if let dictFromJSON = decoded as? [String:String] {
-                            // use dictFromJSON
-                            //}
                             let theJSONText = String(data: jsonData,
                                                      encoding: .ascii)
                             var oJsonResult = self.json(from: self._ResultFlow)
