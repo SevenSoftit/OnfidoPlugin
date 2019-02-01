@@ -206,7 +206,7 @@ class OnResult : NSObject{
         let config = try! OnfidoConfig.builder()
             .withToken(_token)
             .withApplicantId(self._Aplicant_Client)
-            .withDocumentStep(ofType: .passport, andCountryCode: Key_ContryCode)
+            .withDocumentStep(ofType: .nationalIdentityCard, andCountryCode: Key_ContryCode)
             .withFaceStep(ofVariant: .video)
             .withCustomLocalization(andTableName:"Localizable")
             .withAppearance(appearance)
