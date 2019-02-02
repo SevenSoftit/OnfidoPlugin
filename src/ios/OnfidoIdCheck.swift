@@ -46,6 +46,7 @@ class OnResult : NSObject{
     var Key_secondaryBackgroundPressedColor: String = ""
     var Key_fontRegular = ""
     var Key_fontBold = ""
+    var dictAplicant_Client: [String: Any] = [String: Any]()
     func json(from object:Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
@@ -113,8 +114,8 @@ class OnResult : NSObject{
                     {
                         let valueAplication_Client = self.json(from: valueOnf)
                         let dataAplicant_Client: Data = (valueAplication_Client as! String).data(using: .utf8)!
-                        let dictAplicant_Client = try JSONSerialization.jsonObject(with: dataAplicant_Client, options: []) as? [String: Any]
-                        for (keyAplicant_Client, valueAplicant_Client) in dictAplicant_Client! {
+                        dictAplicant_Client = try (JSONSerialization.jsonObject(with: dataAplicant_Client, options: []) as? [String: Any])!
+                        for (keyAplicant_Client, valueAplicant_Client) in dictAplicant_Client {
                             if (keyAplicant_Client.contains(self.Key_First_Name))
                             {
                                 self._First_Name = String(describing: valueAplicant_Client)
@@ -145,7 +146,7 @@ class OnResult : NSObject{
         Alamofire.request(
             "https://api.onfido.com/v2/applicants",
             method: .post,
-            parameters: applicant,
+            parameters: self.dictAplicant_Client,
             encoding: JSONEncoding.default,
             headers: headers).responseJSON { (response: DataResponse<Any>) in
                 guard response.error == nil else {
