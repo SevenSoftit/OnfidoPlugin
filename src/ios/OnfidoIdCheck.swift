@@ -38,6 +38,7 @@ class OnResult : NSObject{
     var Key_Reports = "reports"
     var Key_Type = "type"
     var Key_ContryCode: String = "SLV" // Codigo de pais
+    var Key_Country: String = "country"
     var Result: Bool = false
     //Variables para colores.
     var Key_PrimaryColor: String = ""
@@ -59,14 +60,11 @@ class OnResult : NSObject{
         if (cString.hasPrefix("#")) {
             cString.remove(at: cString.startIndex)
         }
-
         if ((cString.characters.count) != 6) {
             return UIColor.gray
         }
-
         var rgbValue:UInt32 = 0
         Scanner(string: cString).scanHexInt32(&rgbValue)
-
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -102,7 +100,6 @@ class OnResult : NSObject{
                         let dataAplicant_Check: Data = (valueAplication_Check as! String).data(using: .utf8)!
                         let dictAplicant_Check = try JSONSerialization.jsonObject(with: dataAplicant_Check, options: []) as? [String: Any]
                         for (keyAplicant_Report, valueAplicant_Report) in dictAplicant_Check! {
-
                             if (keyAplicant_Report.contains("reports"))
                             {
                                 let value_Report = self.json(from: valueAplicant_Report)
@@ -123,6 +120,10 @@ class OnResult : NSObject{
                             if (keyAplicant_Client.contains(self.Key_Last_Name))
                             {
                                 self._Last_Name = String(describing: valueAplicant_Client)
+                            }
+                            if (keyAplicant_Client.contains(self.Key_Country))
+                            {
+                                self.Key_ContryCode = String(describing: valueAplicant_Client)
                             }
                         }
                     }
@@ -260,6 +261,7 @@ class OnResult : NSObject{
         Key_secondaryBackgroundPressedColor = "#ffffff"
         Key_fontRegular = "OpenSans-Bold"
         Key_fontBold = "OpenSans-Bold"
+        Key_Country = ""
 
         _ResultFlow = OnResult()
         let jsonr = self.json(from:command.arguments[0])
@@ -307,11 +309,9 @@ class OnResult : NSObject{
                                 status: CDVCommandStatus_ERROR,
                                 messageAs: applicantId
                             )
-
                         } catch {
                             print(error.localizedDescription)
                         }
-
                     }
                     self.commandDelegate!.send(
                         pluginResult,
