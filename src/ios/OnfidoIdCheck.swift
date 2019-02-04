@@ -261,7 +261,7 @@ class OnResult : NSObject{
         Key_secondaryBackgroundPressedColor = "#ffffff"
         Key_fontRegular = "OpenSans-Bold"
         Key_fontBold = "OpenSans-Bold"
-        Key_Country = ""
+        Key_Country = "country"
 
         _ResultFlow = OnResult()
         let jsonr = self.json(from:command.arguments[0])
