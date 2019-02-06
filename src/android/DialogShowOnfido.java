@@ -43,6 +43,7 @@ public class DialogShowOnfido extends Activity {
     private JSONObject applicant_client = null;
     private JSONObject applicant_check;
     private String automatic_check;
+    private String country;
     //private JSONParser parser;
 
     @Override
@@ -66,6 +67,7 @@ public class DialogShowOnfido extends Activity {
                     automatic_check = onfido.getString("Automatic_Check");
                     msj_final = onfido.getString("Message_Final");
                     titulo_final = onfido.getString("Titule_Final");
+                    country = onfido.getString("country");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -141,11 +143,25 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void setWelcomeScreen() {
-        final FlowStep[] flowStepsWithOptions = new FlowStep[]{
-                new CaptureScreenStep(DocumentType.PASSPORT, CountryCode.SV),
-                new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                new MessageScreenStep(titulo_final, msj_final, "Start Check")
-        };
+
+        if(country.equals("SVL"))
+            final FlowStep[] flowStepsWithOptions = new FlowStep[]{
+                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+            };
+        if(country.equals("CRC"))
+            final FlowStep[] flowStepsWithOptions = new FlowStep[]{
+                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.CR),
+                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+            };
+        if(country.equals("GTM"))
+            final FlowStep[] flowStepsWithOptions = new FlowStep[]{
+                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GT),
+                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+            };
 
         startFlow(flowStepsWithOptions);
     }
