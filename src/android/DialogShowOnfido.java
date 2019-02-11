@@ -143,28 +143,31 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void setWelcomeScreen() {
-        FlowStep[] flowStepsWithOptions;
-
-        if(country.equals("SVL"))
-            flowStepsWithOptions = new FlowStep[]{
-                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
-                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+        if(country.equals("SVL")){
+            final FlowStep[] flowStepsSvlWithOptions = new FlowStep[]{
+                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                new MessageScreenStep(titulo_final, msj_final, "Start Check")
             };
-        if(country.equals("CRC"))
-            flowStepsWithOptions = new FlowStep[]{
-                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.CR),
-                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+            startFlow(flowStepsSvlWithOptions);
+        }
+        if(country.equals("CRC")){
+            final FlowStep[] flowStepsCrcWithOptions = new FlowStep[]{
+                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                new MessageScreenStep(titulo_final, msj_final, "Start Check")
             };
-        if(country.equals("GTM"))
-            flowStepsWithOptions = new FlowStep[]{
-                    new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GT),
-                    new FaceCaptureStep(FaceCaptureVariant.VIDEO),
-                    new MessageScreenStep(titulo_final, msj_final, "Start Check")
+            startFlow(flowStepsCrcWithOptions);
+        }
+        
+        if(country.equals("GTM")){
+            final FlowStep[] flowStepsGtmWithOptions = new FlowStep[]{
+                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                new FaceCaptureStep(FaceCaptureVariant.VIDEO),
+                new MessageScreenStep(titulo_final, msj_final, "Start Check")
             };
-
-        startFlow(flowStepsWithOptions);
+            startFlow(flowStepsGtmWithOptions);
+        }
     }
 
     private void startFlow(final FlowStep[] flowSteps) {
