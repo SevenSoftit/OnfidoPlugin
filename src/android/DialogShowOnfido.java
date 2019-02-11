@@ -143,7 +143,7 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void setWelcomeScreen() {
-        if(country.equals("SVL")){
+        if(country.equals("SLV")){
             final FlowStep[] flowStepsSvlWithOptions = new FlowStep[]{
                 new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
                 new FaceCaptureStep(FaceCaptureVariant.VIDEO),
