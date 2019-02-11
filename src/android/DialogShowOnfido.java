@@ -143,7 +143,7 @@ public class DialogShowOnfido extends Activity {
     }
 
     private void setWelcomeScreen() {
-        final FlowStep[] flowStepsWithOptions;
+        FlowStep[] flowStepsWithOptions;
 
         if(country.equals("SVL"))
             flowStepsWithOptions = new FlowStep[]{
