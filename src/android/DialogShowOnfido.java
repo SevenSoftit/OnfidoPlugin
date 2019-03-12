@@ -151,9 +151,9 @@ public class DialogShowOnfido extends Activity {
             };
             startFlow(flowStepsSvlWithOptions);
         }
-        if(country.equals("CRC")){
+        if(country.equals("CRI")){
             final FlowStep[] flowStepsCrcWithOptions = new FlowStep[]{
-                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.CR),
                 new FaceCaptureStep(FaceCaptureVariant.VIDEO),
                 new MessageScreenStep(titulo_final, msj_final, "Start Check")
             };
@@ -162,7 +162,7 @@ public class DialogShowOnfido extends Activity {
         
         if(country.equals("GTM")){
             final FlowStep[] flowStepsGtmWithOptions = new FlowStep[]{
-                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.SV),
+                new CaptureScreenStep(DocumentType.NATIONAL_IDENTITY_CARD, CountryCode.GTM),
                 new FaceCaptureStep(FaceCaptureVariant.VIDEO),
                 new MessageScreenStep(titulo_final, msj_final, "Start Check")
             };
